@@ -589,30 +589,6 @@ bool RGBMatrix::Impl::ApplyPixelMapper(const PixelMapper *mapper) {
 // -- Public interface of RGBMatrix. Delegate everything to impl_
 
 static bool drop_privs(const char *priv_user, const char *priv_group) {
-  uid_t ruid, euid, suid;
-  if (getresuid(&ruid, &euid, &suid) >= 0) {
-    if (euid != 0)   // not root anyway. No priv dropping.
-      return true;
-  }
-
-  struct group *g = getgrnam(priv_group);
-  if (g == NULL) {
-    perror("group lookup.");
-    return false;
-  }
-  if (setresgid(g->gr_gid, g->gr_gid, g->gr_gid) != 0) {
-    perror("setresgid()");
-    return false;
-  }
-  struct passwd *p = getpwnam(priv_user);
-  if (p == NULL) {
-    perror("user lookup.");
-    return false;
-  }
-  if (setresuid(p->pw_uid, p->pw_uid, p->pw_uid) != 0) {
-    perror("setresuid()");
-    return false;
-  }
   return true;
 }
 
