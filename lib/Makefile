@@ -166,6 +166,8 @@ DEFINES+=$(USER_DEFINES)
 DEFINES+=-DDEFAULT_HARDWARE='"$(HARDWARE_DESC)"'
 INCDIR=../include
 CFLAGS=-W -Wall -Wextra -Wno-unused-parameter -O3 -g -fPIC $(DEFINES)
+CXX = arm-linux-gnueabihf-g++
+CC = arm-linux-gnueabihf-g++
 CXXFLAGS=$(CFLAGS) -fno-exceptions -std=c++11
 
 all : $(TARGET).a $(TARGET).so.1
